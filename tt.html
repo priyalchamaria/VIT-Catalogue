@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Tower</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1a237e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar img {
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #e0e0e0;
+        }
+
+        .btn {
+            background-color: green;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2E7D32;
+        }
+
+        /* Background Image */
+        #image {
+            background-image: url(TT_Image-header.webp);
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            width: 100%;
+            position: relative;
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: darken;
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .content-section h1 {
+            text-align: center;
+            color: #1a237e;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 2px solid #1a237e;
+            padding-bottom: 10px;
+        }
+
+        /* Floor Menu */
+        .menu {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px;
+            width: 200px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+            background-color: #1565C0;
+        }
+
+        /* Modal Dialog Box Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: modalopen 0.4s;
+        }
+
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal-header {
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            color: #1a237e;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-body ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a237e;
+            color: white;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        footer section {
+            flex: 1;
+            margin: 10px;
+            min-width: 200px;
+        }
+
+        footer h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #e0e0e0;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .social-icons a:hover {
+            background-color: rgba(255,255,255,0.4);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background-color: #121858;
+            color: inherit;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .box {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar-links {
+                margin-top: 10px;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-brand">
+            <img src="VITLogoEmblem.png" alt="VIT Logo"> 
+            <span>VIT (Vellore Campus)</span>
+        </div>
+        <div class="navbar-links">
+            <a href="miniproject.html">Home</a>
+            <a href="#content">Facilities</a>
+            <a href="#footer">About</a>
+            <a class="btn" href="#">Admin Login</a>
+        </div>
+    </div>
+    
+    <!-- Background Image -->
+    <div id="image"></div>
+
+    <!-- Content Section -->
+    <div class="content-section" id="content">
+        <h1>TECHNOLOGY TOWER</h1>
+        <p>The grand Technology Tower, popularly known as TT, is an architectural marvel. It was inaugurated by Honourable Justice Mr. Doraiswamy Raju of the Supreme Court of India, in the presence of Dr. K Venkatasubramanian, a member of the Planning Commission of India, Dr. G Viswanathan, Chancellor and Sri G.V Selvam, Vice President. The building consists of 7 floors, boasts of two conference halls – conference Hall @ TBI with a capacity of 20 and 454 sq. ft. in area and Conference Hall @ TIFAC with a capacity of 14 and 300 sq. ft. in area. It also has several auditoriums such as Dr. B.R Ambedkar auditorium with a capacity of 198 and 2447 sq. ft. in area and Kamaraj auditorium with a capacity of 128 and 2447 sq. ft. in area. It also currently houses 4 schools – SELECT, SENSE, SAS,& SSL along with TBI, CNR (NANO TECHNOLOGY), CBST, TIFFAC-CORE and Academic Staff College. It is well known for having a cooler temperature even during summer, thanks to its remarkable construction and architecture. Standing tall in the middle of the campus, it neighbours the Food Court and Girls Hostel in the campus.</p>
+    </div>
+
+    <!-- Floor Menu -->
+    <div class="menu">
+        <div class="row">
+            <div class="box" id="ground-floor">Ground Floor</div>
+            <div class="box" id="first-floor">First Floor</div>
+            <div class="box" id="second-floor">Second Floor</div>
+            <div class="box" id="third-floor">Third Floor</div>
+        </div>
+        <div class="row">
+            <div class="box" id="fourth-floor">Fourth Floor</div>
+            <div class="box" id="fifth-floor">Fifth Floor</div>
+            <div class="box" id="sixth-floor">Sixth Floor</div>
+            <div class="box" id="seventh-floor">Seventh Floor</div>
+        </div>
+    </div>
+
+    <!-- Modal Dialog Boxes for each floor -->
+    <div id="groundFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Ground Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Ground Floor of Technology Tower:</p>
+                <ul>
+                    <li>Main Reception and Information Desk</li>
+                    <li>Administrative Offices</li>
+                    <li>Technology Business Incubator (TBI)</li>
+                    <li>SCHEME, SELECT and SENSE Labs</li>
+                    <li>Langauage Centres</li>
+                    <li>DTS Nidhi Prayas Centre</li>
+                    <li>Dr. B.R Ambedkar Auditorium (Capacity: 198, Area: 2368 sq. ft.)</li>
+                    <li>Shakespeare Gallery (Capacity: 240, Area: 3380 sq. ft.)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="firstFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>First Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The First Floor of Technology Tower:</p>
+                <ul>
+                    <li>School of Electronics Engineering (SELECT) labs</li>
+                    <li>Faculty Cabins</li>
+                    <li>Conference Hall @ TBI (Capacity: 20, Area: 454 sq. ft.)</li>
+                    <li>Student Project Rooms</li>
+                    <li>Centre of Technical Support Office</li>
+                </ul>
+            </div>
+            </div>
+    </div>
+
+    <div id="secondFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Second Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Second Floor of Technology Tower:</p>
+                <ul>
+                    <li>School of Electrical Engineering (SENSE) labs</li>
+                    <li>Research Centers</li>
+                    <li>Faculty Research Labs</li>
+                    <li>Graduate Student Workspaces</li>
+                    <li>TT VOC Gallery(Capacity: 240, Area: 3379 sq. ft.)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="thirdFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Third Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Third Floor of Technology Tower:</p>
+                <ul>
+                    <li>School of Advanced Sciences (SAS) departments</li>
+                    <li>Physics and Chemistry Laboratories</li>
+                    <li>Faculty Offices</li>
+                    <li>Conference Hall @ TIFAC (Capacity: 14, Area: 300 sq. ft.)</li>
+                    <li>Dean Room</li>
+                    <li>Centre for Nano Research(CNR)</li>
+                </ul>
+                </div>
+            </div>
+    </div>
+
+    <div id="fourthFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Fourth Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Fourth Floor of Technology Tower:</p>
+                <ul>
+                    <li>School of Social Sciences and Languages (SSL)</li>
+                    <li>Nano Research Labs</li>
+                    <li>Qmax Lab</li>
+                    <li>Faculty Cabins</li>
+                    <li>Centre for Excellence</li>
+                    <li>Director CRM Office</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="fifthFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Fifth Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Fifth Floor of Technology Tower:</p>
+                <ul>
+                    <li>Centre for Nano Research (CNR)</li>
+                    <li>Advanced Nanotechnology Laboratories</li>
+                    <li>SELECT Labs</li>
+                    <li>Research Scholar Workspaces</li>
+                    <li>Faculty Research Offices</li>
+                    <li>Specialized Equipment Rooms</li>
+                    <li>Dean and Conference Room</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+
+    <div id="sixthFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Sixth Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Sixth Floor of Technology Tower:</p>
+                <ul>
+                    <li>Centre for Bio-Separation Technology (CBST)</li>
+                    <li>Biotechnology Research Labs</li>
+                    <li>Collaborative Research Spaces</li>
+                    <li>PhD Scholar Workstations</li>
+                    <li>Industry Partnership Offices</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="seventhFloorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2>Seventh Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Seventh Floor of Technology Tower contains:</p>
+                <ul>
+                    <li>TIFAC-CORE (Technology Information, Forecasting & Assessment Council - Centres of Relevance & Excellence)</li>
+                    <li>Johnson Control Smart Building Lab</li>
+                    <li>Executive Meeting Rooms</li>
+                    <li>Advanced Research Centers</li>
+                    <li>Kamaraj Auditorium (Capacity: 128, Area: 2152 sq. ft.)</li>
+                    <li>VITOL Classrooms</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <section>
+            <h4>About VIT</h4>
+            <p>Vellore Institute of Technology is one of India's leading institutions known for academic excellence and state-of-the-art infrastructure.</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/vituniversity/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/vit_univ"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/vellore_vit/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/school/vellore-institute-of-technology/posts/?feedView=all"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </section>
+
+        <section>
+            <h4>Quick Links</h4>
+            <a href="#">Home</a>
+            <a href="#">Facilities</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+        </section>
+
+        <section>
+            <h4>Facilities</h4>
+            <a href="#">Auditoriums</a>
+            <a href="#">Seminar Halls</a>
+            <a href="#">Laboratories</a>
+            <a href="#">Special Cells</a>
+        </section>
+
+        <section>
+            <h4>Contact Us</h4>
+            <div class="contact-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>Vellore, Tamil Nadu, India</p>
+            </div>
+            <div class="contact-info">
+                <i class="fas fa-phone"></i>
+                <p>91-416-2243091 / 93</p>
+            </div>
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                <p>admin.vellore@vit.ac.in</p>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JavaScript for Modal Functionality -->
+    <script>
+        // Get all modals
+        const modals = {
+            ground: document.getElementById("groundFloorModal"),
+            first: document.getElementById("firstFloorModal"),
+            second: document.getElementById("secondFloorModal"),
+            third: document.getElementById("thirdFloorModal"),
+            fourth: document.getElementById("fourthFloorModal"),
+            fifth: document.getElementById("fifthFloorModal"),
+            sixth: document.getElementById("sixthFloorModal"),
+            seventh: document.getElementById("seventhFloorModal")
+        };
+
+        // Get all floor buttons
+        const buttons = {
+            ground: document.getElementById("ground-floor"),
+            first: document.getElementById("first-floor"),
+            second: document.getElementById("second-floor"),
+            third: document.getElementById("third-floor"),
+            fourth: document.getElementById("fourth-floor"),
+            fifth: document.getElementById("fifth-floor"),
+            sixth: document.getElementById("sixth-floor"),
+            seventh: document.getElementById("seventh-floor")
+        };
+
+        // Get all close buttons
+        const closeButtons = document.getElementsByClassName("close-btn");
+
+        // Add click event to all floor buttons
+        buttons.ground.onclick = function() { modals.ground.style.display = "block"; }
+        buttons.first.onclick = function() { modals.first.style.display = "block"; }
+        buttons.second.onclick = function() { modals.second.style.display = "block"; }
+        buttons.third.onclick = function() { modals.third.style.display = "block"; }
+        buttons.fourth.onclick = function() { modals.fourth.style.display = "block"; }
+        buttons.fifth.onclick = function() { modals.fifth.style.display = "block"; }
+        buttons.sixth.onclick = function() { modals.sixth.style.display = "block"; }
+        buttons.seventh.onclick = function() { modals.seventh.style.display = "block"; }
+
+        // Add click event to all close buttons
+        for (let i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].onclick = function() {
+                this.parentElement.parentElement.style.display = "none";
+            }
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            for (let key in modals) {
+                if (event.target === modals[key]) {
+                    modals[key].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

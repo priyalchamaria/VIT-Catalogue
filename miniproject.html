@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIT Infrastructure Catalogue</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --accent-color: #4caf50;
+            --light-bg: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            color: white;
+        }
+
+        .navbar-brand {
+            color: white;
+            text-decoration: none;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .navbar-brand img {
+            height: 40px;  
+            width: auto;   
+            margin-right: 10px; 
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin-left: 15px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+
+        .admin-login-btn {
+            background-color: #4caf50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        /*Navigation Toggle */
+        .navbar-toggler {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Section Styles */
+        .main-section {
+            background-image: url(https://vit.ac.in/wp-content/uploads/2023/08/infra_image1.webp);
+            background-size: cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            color: #1a237e;
+        }
+
+        .main-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .main-text p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .explore-btn {
+            display: inline-block;
+            background-color: #1a237e;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        /* Facilities Section Styles */
+        .facilities-section {
+            padding: 60px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .facility-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .facility-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            margin-bottom: 15px;
+        }
+
+        .facility-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .facility-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1500;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-dialog {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            line-height: 36px;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .navbar-nav {
+                display: none;
+            }
+
+            .navbar-toggler {
+                display: block;
+            }
+
+            .facilities-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <img src="VITLogoEmblem.png" alt="VIT Logo">
+            VIT (Vellore Campus)
+        </a>
+        <button class="navbar-toggler">☰</button>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+            <li class="nav-item"><a href="#facilities" class="nav-link">Facilities</a></li>
+            <li class="nav-item"><a href="#footer" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="admin-login-btn" onclick="openLoginModal()">Admin Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Section -->
+    <section class="main-section" id="home">
+        <div class="main-text">
+            <h1>VIT Infrastructure Catalogue</h1>
+            <p>Explore world-class facilities at Vellore Institute of Technology</p>
+            <a href="#facilities" class="explore-btn" id="explore">Explore Facilities</a>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="facilities-section" id="facilities">
+        <div class="container">
+            <h2 class="section-title">Our Facilities</h2>
+            
+            <div class="facilities-grid">
+                <!-- Technology Tower -->
+                <div class="facility-card">
+                    <img src="TT_Image-header.webp" alt="Technology Tower">
+                    <div class="card-body">
+                        <h5 class="card-title">Technology Tower</h5>
+                        <p class="card-text">Technology Tower at Vellore Institute of Technology is a cutting-edge facility that hosts advanced computer labs, IoT and AI research centers, along with specialized laboratories for the ECE department, including VLSI, Embedded Systems, and Communication labs, providing students with hands-on learning and research opportunities.</p>
+                        <a href="tt.html" target="_blank" class="facility-btn">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Silver Jubilee Tower -->
+                <div class="facility-card">
+                    <img src="sjt-header-scaled.webp" alt="Silver Jubilee Tower">
+                    <div class="card-body">
+                        <h5 class="card-title">Silver Jubilee Tower</h5>
+                        <p class="card-text">Silver Jubilee Tower at Vellore Institute of Technology is a modern academic block equipped with spacious lecture halls, seminar rooms, and advanced research labs, fostering an environment conducive to learning, innovation, and academic excellence.</p>
+                        <a href="sjt.html" target="_blank" class="facility-btn">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Pearl Research Park -->
+                <div class="facility-card">
+                    <img src="https://vit.ac.in/wp-content/uploads/2025/03/327A0102-copy-scaled.webp" alt="PRP">
+                    <div class="card-body">
+                        <h5 class="card-title">Pearl Research Park</h5>
+                        <p class="card-text">The PRP Block at VIT Vellore is one of the newer academic buildings, primarily catering to freshers. Apart from its enormous and spacious classrooms, the block features brilliantly designed smart classrooms and galleries, adding to its modern infrastructure. The interior is well-designed, making it a comfortable and advanced learning space for students.</p>
+                        <a href="prp.html" target="_blank" class="facility-btn">View Details</a>
+                    </div>
+                </div>
+
+                <!-- SMV Hall -->
+                <div class="facility-card">
+                    <img src="https://vit.ac.in/wp-content/uploads/2025/03/hexagon-scaled.webp" alt="SMV">
+                    <div class="card-body">
+                        <h5 class="card-title">Sri M Vishweshwaraiah Building</h5>
+                        <p class="card-text">SMV is also called 'The Hexagon' due to its unique architecture. The building is in the shape of a hexagon consisting of spacious classrooms and well-equipped labs, mostly Chemical and Biotechnology Labs. SMV houses the School of Bio-sciences and Technology (SBST), Catering and Hotel Management.</p>
+                        <a href="smv.html" target="_blank" class="facility-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h5>Admin Login</h5>
+                <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h5>About VIT</h5>
+                    <p>Vellore Institute of Technology is one of India's leading institutions known for academic excellence and state-of-the-art infrastructure.</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/vituniversity/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/vit_univ"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/vellore_vit/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/school/vellore-institute-of-technology/posts/?feedView=all"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Facilities</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Facilities</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Auditoriums</a></li>
+                        <li><a href="#">Seminar Halls</a></li>
+                        <li><a href="#">Laboratories</a></li>
+                        <li><a href="#">Special Cells</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Contact Us</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Vellore, Tamil Nadu, India</li>
+                        <li><i class="fas fa-phone"></i> 91-416-2243091 / 93</li>
+                        <li><i class="fas fa-envelope"></i> admin.vellore@vit.ac.in</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Menu toggle
+        document.querySelector('.navbar-toggler').addEventListener('click', function() {
+            const navMenu = document.querySelector('.navbar-nav');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearl Research Park</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html{
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1a237e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar img {
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #e0e0e0;
+        }
+
+        .btn {
+            background-color: green;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2E7D32;
+        }
+
+        /* Background Image */
+        #image {
+            background-image: url(https://vit.ac.in/wp-content/uploads/2025/03/327A0102-copy-scaled.webp);
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            width: 100%;
+            position: relative;
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: darken;
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .content-section h1 {
+            text-align: center;
+            color: #1a237e;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 2px solid #1a237e;
+            padding-bottom: 10px;
+        }
+
+        /* Floor Menu */
+        .menu {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px;
+            width: 200px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+            background-color: #1565C0;
+        }
+
+        /* Modal Dialog Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            animation: modalopen 0.4s;
+        }
+
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-60px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .modal-header h2 {
+            color: #1a237e;
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body p {
+            margin-bottom: 10px;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a237e;
+            color: white;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        footer section {
+            flex: 1;
+            margin: 10px;
+            min-width: 200px;
+        }
+
+        footer h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #e0e0e0;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .social-icons a:hover {
+            background-color: rgba(255,255,255,0.4);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background-color: #121858;
+            color: inherit;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .box {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar-links {
+                margin-top: 10px;
+            }
+
+            footer {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-brand">
+            <img src="VITLogoEmblem.png" alt="VIT Logo"> 
+            <span>VIT (Vellore Campus)</span>
+        </div>
+        <div class="navbar-links">
+            <a href="miniproject.html">Home</a>
+            <a href="#facilities">Facilities</a>
+            <a href="#about">About</a>
+            <a class="btn" href="#">Admin Login</a>
+        </div>
+    </div>
+    
+    <!-- Background Image -->
+    <div id="image"></div>
+
+    <!-- Content Section -->
+    <div id="facilities" class="content-section">
+        <h1>PEARL RESEARCH PARK</h1>
+        <p>The Pearl Research Park ( PRP ) is one of the unique building at VIT. Which consists of G+7 floors with total built-up area of 10.53 Lakh sqft. Located between SJT Building and Gandhi Block. It was inaugurated by Hon'ble Thiru M.K. Stalin, Chief Minister of Tamil Nadu. on 01st February, 2023 in the presence of Hon'ble Thiru. Duraimurugan, Minister of Water Resources, Hon'ble Thiru. Dr. K. Ponmudy, Minister of Higher Education and Hon'ble Thiru. R. Gandhi, Minister of Handlooms & Textiles and Dr. G Viswanathan, Hon'ble Chancellor. Apart from enormous and spacious classrooms, brilliantly designed smart classrooms and galleries added to the list of unique features of PRP.</p>
+        <p>Best Interiors are provided for all laboratories and research centres of various departments with international standards.</p>
+    </div>
+
+    <!-- Floor Menu -->
+    <div class="menu">
+        <div class="row">
+            <div class="box" onclick="openModal('lower-ground-floor')">Lower Ground Floor</div>
+            <div class="box" onclick="openModal('ground-floor')">Ground Floor</div>
+            <div class="box" onclick="openModal('first-floor')">First Floor</div>
+            <div class="box" onclick="openModal('second-floor')">Second Floor</div>
+        </div>
+        <div class="row">
+            <div class="box" onclick="openModal('third-floor')">Third Floor</div>
+            <div class="box" onclick="openModal('fourth-floor')">Fourth Floor</div>
+            <div class="box" onclick="openModal('fifth-floor')">Fifth Floor</div>
+            <div class="box" onclick="openModal('sixth-floor')">Sixth Floor</div>
+        </div>
+    </div>
+
+    <!-- Modal Dialogs for Each Floor -->
+    <!-- Lower Ground Floor Modal -->
+    <div id="lower-ground-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('lower-ground-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Lower Ground Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Lower Ground Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Storage Areas</li>
+                    <li>VIP Waiting room</li>
+                    <li>Engineering Workshops</li>
+                    <li>Maintenance Facilities</li>
+                    <li>Gallery-Auditorium (Capacity: 98, Area: 1762.17sq. ft.)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ground Floor Modal -->
+    <div id="ground-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ground-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Ground Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Ground Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>SAS Labs</li>
+                    <li>Classrooms</li>
+                    <li>SCOPE School Office</li>
+                    <li>Faculty Cabin</li>
+                    <li>Administrative Offices</li>
+                    <li>Conference Rooms</li>
+                    <li>Cafeteria</li>
+                </ul>               
+            </div>
+        </div>
+    </div>
+
+    <!-- First Floor Modal -->
+    <div id="first-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('first-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>First Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The First Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Classrooms</li>
+                    <li>Lecture Halls</li>
+                    <li>SCOPE and SAS Labs</li>
+                    <li>Faculty Cabins</li>
+                    <li>Electrical Room</li>
+                    <li>PRP Block Main Server Room</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Floor Modal -->
+    <div id="second-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('second-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Second Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Second Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Classrooms</li>
+                    <li>Students Councelling Room</li>
+                    <li>Computer Science Laboratories</li>
+                    <li>SEED Lab (Samsung Lab)</li>
+                    <li>Faculty Cabins</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Floor Modal -->
+    <div id="third-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('third-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Third Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Third Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Classrooms</li>
+                    <li>Electronics and Electrical Labs</li>
+                    <li>SAS Labs</li>
+                    <li>Funded Project Lab</li>
+                    <li>International Innovation Council Lab</li>
+                    <li>Faculty Research Spaces</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fourth Floor Modal -->
+    <div id="fourth-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('fourth-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Fourth Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Fourth Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Classrooms</li>
+                    <li>SBST and SENSE Labs</li>
+                    <li>Language Labs</li>
+                    <li>CNBT Labs</li>
+                    <li>CNBT Faculty & Cabin discussion</li>
+                    <li>Faculty Cabins</li>
+                    <li>Student Study Areas</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fifth Floor Modal -->
+    <div id="fifth-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('fifth-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Fifth Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Fifth Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Utility Room</li>
+                    <li>Conference Room</li>
+                    <li>VAIAL Dean Room & School Office</li>
+                    <li>VAIAL Labs</li>
+                    <li>Biotechnology Laboratories</li>
+                    <li>Advanced Biological Research Labs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sixth Floor Modal -->
+    <div id="sixth-floor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('sixth-floor')">&times;</span>
+            <div class="modal-header">
+                <h2>Sixth Floor</h2>
+            </div>
+            <div class="modal-body">
+                <p>The Sixth Floor of Pearl Research Park:</p>
+                <ul>
+                    <li>Classrooms</li>
+                    <li>VAIAL Labs</li>
+                    <li>Advanced Research Centers</li>
+                    <li>Interdisciplinary Innovation Labs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="about">
+        <section>
+            <h4>About VIT</h4>
+            <p>Vellore Institute of Technology is one of India's leading institutions known for academic excellence and state-of-the-art infrastructure.</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/vituniversity/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/vit_univ"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/vellore_vit/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/school/vellore-institute-of-technology/posts/?feedView=all"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </section>
+        <section>
+            <h4>Quick Links</h4>
+            <a href="#home">Home</a>
+            <a href="#facilities">Facilities</a>
+            <a href="#about">About Us</a>
+            <a href="#">Contact</a>
+        </section>
+        <section>
+            <h4>Facilities</h4>
+            <a href="#">Auditoriums</a>
+            <a href="#">Seminar Halls</a>
+            <a href="#">Laboratories</a>
+            <a href="#">Special Cells</a>
+        </section>
+        <section>
+            <h4>Contact Us</h4>
+            <div class="contact-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>Vellore, Tamil Nadu, India</p>
+            </div>
+            <div class="contact-info">
+                <i class="fas fa-phone"></i>
+                <p>91-416-2243091 / 93</p>
+            </div>
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                <p>admin.vellore@vit.ac.in</p>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JavaScript for Modal Functionality -->
+    <script>
+        // Function to open modal
+        function openModal(id) {
+            document.getElementById(id).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        // Function to close modal
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Close modal when clicking outside of the modal content
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal when ESC key is pressed
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.getElementsByClassName('modal');
+                for (let i = 0; i < modals.length; i++) {
+                    if (modals[i].style.display === 'block') {
+                        modals[i].style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
